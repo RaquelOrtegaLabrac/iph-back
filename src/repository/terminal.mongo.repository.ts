@@ -67,7 +67,16 @@ export class TerminalRepo implements Repo<Terminal> {
   }
 
   async delete(id: string): Promise<void> {
-    const result = await TerminalModel.findByIdAndDelete(id).exec();
-    if (result === null) throw new HttpError(404, 'Not found', 'Invalid id');
+    const deletedTerminal = await TerminalModel.findByIdAndDelete(id).exec();
+    if (deletedTerminal === null) throw new HttpError(404, 'Not found', 'Invalid id');
+
+    // Elimina el terminal del grupo
+    if (deletedTerminal.group) {
+      const group = await GroupModel.findById(deletedTerminal.group).exec();
+      if (group) {
+        group.terminals = group.terminals.filter((terminalId) => terminalId.toString() !== id);
+        await group.save();
+      }
+    }
   }
 }
