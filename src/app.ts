@@ -5,8 +5,10 @@ import cors from 'cors';
 import createDebug from 'debug';
 import { errorHandler } from './middleware/error.js';
 import { userRouter } from './routers/user.router.js';
-import { instrumentRouter } from './routers/instrument.router.js';
-const debug = createDebug('final-project:App');
+import { terminalRouter } from './routers/terminal.router.js';
+import { chatRouter } from './routers/chat.router.js';
+import { groupRouter } from './routers/group.router.js';
+const debug = createDebug('api-iph:App');
 
 export const app = express();
 
@@ -22,10 +24,12 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/', (_req, res) => {
-  res.send('Unusual instruments');
+  res.send('Terminals, groups & chats');
 });
 
 app.use('/user', userRouter);
-app.use('/instrument', instrumentRouter);
+app.use('/terminal', terminalRouter);
+app.use('/chat', chatRouter);
+app.use('/group', groupRouter)
 
 app.use(errorHandler);

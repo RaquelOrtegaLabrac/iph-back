@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "start:watch": "node --watch dist/index.js",
-    "start:server": "cross-env DEBUG=final-project* PORT=4400 nodemon dist/index.js",
+    "start:server": "cross-env DEBUG=api-iph* PORT=5500 nodemon dist/index.js",
     "build:dev": "tsc --watch",
     "build": "tsc",
     "start:dev": "concurrently \"npm:start:server\" \"npm:build:dev\"",
@@ -52,6 +52,7 @@
     "inquirer": "^9.2.7",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.0",
+    "mongodb": "^6.2.0",
     "mongoose": "^7.2.4",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",

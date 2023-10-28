@@ -2,9 +2,9 @@ import http from 'http';
 import { app } from './app.js';
 import createDebug from 'debug';
 import { dbConnect } from './db/db.connect.js';
-const debug = createDebug('final-project');
+const debug = createDebug('api-iph');
 
-const PORT = process.env.PORT || 4444;
+const PORT = process.env.PORT || 5555;
 
 const server = http.createServer(app);
 
