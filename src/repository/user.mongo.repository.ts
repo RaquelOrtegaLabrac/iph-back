@@ -42,14 +42,21 @@ export class UserRepo implements Repo<User> {
     if (foundChat) {
       const newUser = await UserModel.create({ userName, password, userChat: foundChat._id });
 
-      foundChat.participants.push(newUser);
-      await foundChat.save();
+      // Popula el usuario antes de agregarlo a la colección
+      const userWithDetails = await UserModel.findById(newUser._id).exec();
 
-      return newUser;
+      if (userWithDetails) {
+        foundChat.participants.push(userWithDetails);
+        await foundChat.save();
+
+        return userWithDetails;
+      }
     }
 
     throw new HttpError(400, 'Bad Request', `Chat "${chat}" not found`);
   }
+
+
 
 
 

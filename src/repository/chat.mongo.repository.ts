@@ -4,7 +4,7 @@ import { ChatModel } from './chat.mongo.model.js';
 import { HttpError } from '../types/http.error.js';
 import createDebug from 'debug';
 
-const debug = createDebug('NB:ChatRepo ');
+const debug = createDebug('IPH:ChatRepo ');
 
 export class ChatRepo implements Repo<Chat> {
   constructor() {

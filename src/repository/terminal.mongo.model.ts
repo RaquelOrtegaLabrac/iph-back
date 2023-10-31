@@ -18,7 +18,7 @@ const terminalSchema = new Schema<Terminal>({
     unique: false,
   },
   isConnected: {
-    type: Boolean,
+    type: String,
     required: false,
     unique: false,
   },

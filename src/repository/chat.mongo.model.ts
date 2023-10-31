@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { Chat } from '../entities/chat';
+// Import { string } from 'joi';
 
 const chatSchema = new Schema<Chat>({
   name: {
@@ -12,7 +13,7 @@ const chatSchema = new Schema<Chat>({
     ref: 'User',
   }],
   isActive: {
-    type: Boolean,
+    type: String,
     required: false,
     unique: false
   }
@@ -22,7 +23,10 @@ chatSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
-    delete returnedObject.participants;
+    // Manejar null al acceder a la colección de participantes
+    if (Array.isArray(returnedObject.participants)) {
+      returnedObject.participants = returnedObject.participants.filter(p => p !== null);
+    }
   },
 });
 

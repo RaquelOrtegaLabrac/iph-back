@@ -13,6 +13,7 @@ export class GroupRepo implements Repo<Group> {
 
   async query(): Promise<Group[]> {
     const allData = await GroupModel.find()
+    .populate('terminals')
 
       .exec();
     return allData;

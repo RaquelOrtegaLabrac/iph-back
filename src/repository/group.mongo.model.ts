@@ -17,7 +17,10 @@ groupSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
-    delete returnedObject.terminals;
+    // Manejar null al acceder a la colección de terminales
+    if (Array.isArray(returnedObject.terminals)) {
+      returnedObject.terminals = returnedObject.terminals.filter(p => p !== null);
+    }
   },
 });
 
