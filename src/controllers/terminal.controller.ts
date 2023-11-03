@@ -39,13 +39,13 @@ export class TerminalController extends Controller<Terminal> {
       console.log('BODY', req.body);
       const { id: userId } = req.body.tokenPayload as PayloadToken;
       const user = await this.userRepo.queryById(userId);
-      console.log('USERID', userId)
       delete req.body.tokenPayload;
       req.body.owner = userId;
       const newTerminal = await this.repo.create(req.body);
       console.log('newTerminal ', newTerminal)
+      // Console.log('REQ.BODY.GROUP: ', req.body.group);
+
       this.userRepo.update(user.id, user);
-      console.log('userRepo Update:', user)
       res.status(201);
       console.log('this');
       res.send(newTerminal);

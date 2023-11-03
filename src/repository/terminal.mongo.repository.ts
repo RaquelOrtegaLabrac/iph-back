@@ -29,36 +29,43 @@ export class TerminalRepo implements Repo<Terminal> {
   }
 
 
-    async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
-    const newTerminal = await TerminalModel.create(data);
-    return newTerminal;
-  }
-
-
-  // Async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
-  //   const { name, battery, wifiLevel, isConnected, group } = data;
-
-  //   const foundGroup = await GroupModel.findOne({ name: group });
-
-  //   if (foundGroup) {
-  //     const newTerminal = await TerminalModel.create({
-  //       name,
-  //       battery,
-  //       wifiLevel,
-  //       isConnected,
-  //       group: [foundGroup._id], // Debes pasar un array de ObjectId
-  //     });
-
-  //     return newTerminal;
-  //   }
-
-  //   throw new HttpError(400, 'Bad Request', `Group "${group}" not found`);
+  //   Async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
+  //   const newTerminal = await TerminalModel.create(data);
+  //   return newTerminal;
   // }
 
 
+  async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
+    const { name, battery, wifiLevel, isConnected, group, owner } = data;
+
+    const foundGroup = await GroupModel.findOne({ name: 'group3' });
+    console.log('FOUND GROUP:', foundGroup)
+    console.log('Search for group:', group);
+
+    if (foundGroup) {
+      const newTerminal = await TerminalModel.create({
+        name,
+        battery,
+        wifiLevel,
+        isConnected,
+        group: foundGroup._id,
+        owner
+      });
+
+      foundGroup.terminals.push(newTerminal);
+      await foundGroup.save();
 
 
-  // async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
+      return newTerminal;
+    }
+
+    throw new HttpError(400, 'Bad Request', `Group "${group}" not found`);
+  }
+
+
+
+
+  // Async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
   //   const { name, battery, wifiLevel, isConnected, group, owner } = data;
   //        console.log('Data received in create:', data);
   //    console.log('Data received in create:', data.battery);
