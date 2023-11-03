@@ -20,7 +20,7 @@ export class ChatRepo implements Repo<Chat> {
 
   async queryById(id: string): Promise<Chat> {
     const result = await ChatModel.findById(id)
-      .populate('owner', { sightings: 0 })
+      .populate('owner', { chats: 0 })
       .exec();
     if (result === null)
       throw new HttpError(400, 'Not found', 'No user found with this id');
@@ -28,18 +28,18 @@ export class ChatRepo implements Repo<Chat> {
   }
 
   async create(data: Omit<Chat, 'id'>): Promise<Chat> {
-    const newSighting = await ChatModel.create(data);
-    return newSighting;
+    const newChat = await ChatModel.create(data);
+    return newChat;
   }
 
   async update(id: string, data: Partial<Chat>): Promise<Chat> {
-    const newSighting = await ChatModel.findByIdAndUpdate(id, data, {
+    const newChat = await ChatModel.findByIdAndUpdate(id, data, {
       new: true,
     }).exec();
 
-    if (newSighting === null)
+    if (newChat === null)
       throw new HttpError(404, 'Not found', 'Invalid id');
-    return newSighting;
+    return newChat;
   }
 
   async search({

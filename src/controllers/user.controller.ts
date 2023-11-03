@@ -52,8 +52,7 @@ export class UserController extends Controller<User> {
         userName: data[0].userName,
       };
       const token = AuthServices.createJWT(payload);
-      console.log("Generated Token:", token); // Agrega este console.log
-
+      console.log("Generated Token:", token);
       const response: LoginResponse = {
         token,
         user: data[0],

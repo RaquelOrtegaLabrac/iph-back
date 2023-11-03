@@ -1,6 +1,4 @@
-
 import { User } from './user';
-
 export type Terminal = {
   id: string;
   name: string;
@@ -24,6 +22,6 @@ export type Terminal = {
   isConnected:
   | 'yes'
   | 'no'
-  owner: User;
   group: string;
+  owner: User;
 };

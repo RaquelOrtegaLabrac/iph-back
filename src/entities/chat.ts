@@ -7,4 +7,6 @@ export type Chat = {
   isActive:
   | 'yes'
   | 'no'
+  owner: User;
+
 };

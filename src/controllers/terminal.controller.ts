@@ -15,15 +15,37 @@ export class TerminalController extends Controller<Terminal> {
     debug('Instantiated');
   }
 
+  // Async post(req: Request, res: Response, next: NextFunction) {
+  //   try {
+  //     console.log('BODY', req.body);
+  //     const { id: userId } = req.body.tokenPayload as PayloadToken;
+  //     const user = await this.userRepo.queryById(userId);
+  //     delete req.body.tokenPayload;
+  //     req.body.owner = userId;
+  //     const newTerminal = await this.repo.create(req.body);
+  //     this.userRepo.update(user.id, user);
+  //     res.status(201);
+  //     console.log('USERID: ', user.id)
+  //     console.log('this');
+  //     res.send(newTerminal);
+  //     console.log('NEW TERMINl', newTerminal)
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
+
   async post(req: Request, res: Response, next: NextFunction) {
     try {
       console.log('BODY', req.body);
       const { id: userId } = req.body.tokenPayload as PayloadToken;
       const user = await this.userRepo.queryById(userId);
+      console.log('USERID', userId)
       delete req.body.tokenPayload;
       req.body.owner = userId;
       const newTerminal = await this.repo.create(req.body);
+      console.log('newTerminal ', newTerminal)
       this.userRepo.update(user.id, user);
+      console.log('userRepo Update:', user)
       res.status(201);
       console.log('this');
       res.send(newTerminal);

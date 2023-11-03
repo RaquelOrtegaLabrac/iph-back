@@ -22,23 +22,23 @@ const terminalSchema = new Schema<Terminal>({
     required: false,
     unique: false,
   },
-  owner: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
   group: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Group',
     }
-  ]
+  ],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 terminalSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
-    delete returnedObject.owner;
+    // Delete returnedObject.owner;
   },
 });
 

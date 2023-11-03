@@ -11,6 +11,10 @@ const groupSchema = new Schema<Group>({
     type: Schema.Types.ObjectId,
     ref: 'Terminal',
   }],
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 groupSchema.set('toJSON', {
@@ -18,9 +22,9 @@ groupSchema.set('toJSON', {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
     // Manejar null al acceder a la colección de terminales
-    if (Array.isArray(returnedObject.terminals)) {
-      returnedObject.terminals = returnedObject.terminals.filter(p => p !== null);
-    }
+    // if (Array.isArray(returnedObject.terminals)) {
+    //   returnedObject.terminals = returnedObject.terminals.filter(p => p !== null);
+    // }
   },
 });
 

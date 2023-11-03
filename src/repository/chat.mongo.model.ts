@@ -16,7 +16,11 @@ const chatSchema = new Schema<Chat>({
     type: String,
     required: false,
     unique: false
-  }
+  },
+    owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 chatSchema.set('toJSON', {

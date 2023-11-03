@@ -29,18 +29,18 @@ export class GroupRepo implements Repo<Group> {
   }
 
   async create(data: Omit<Group, 'id'>): Promise<Group> {
-    const newSighting = await GroupModel.create(data);
-    return newSighting;
+    const newGroup = await GroupModel.create(data);
+    return newGroup;
   }
 
   async update(id: string, data: Partial<Group>): Promise<Group> {
-    const newSighting = await GroupModel.findByIdAndUpdate(id, data, {
+    const newGroup = await GroupModel.findByIdAndUpdate(id, data, {
       new: true,
     }).exec();
 
-    if (newSighting === null)
+    if (newGroup === null)
       throw new HttpError(404, 'Not found', 'Invalid id');
-    return newSighting;
+    return newGroup;
   }
 
   async search({
