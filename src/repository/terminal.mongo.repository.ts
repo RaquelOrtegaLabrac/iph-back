@@ -5,6 +5,7 @@ import { HttpError } from '../types/http.error.js';
 import createDebug from 'debug';
 import { GroupModel } from './group.mongo.model.js';
 
+
 const debug = createDebug('NB:TerminalRepo ');
 
 export class TerminalRepo implements Repo<Terminal> {
@@ -29,18 +30,11 @@ export class TerminalRepo implements Repo<Terminal> {
   }
 
 
-  //   Async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
-  //   const newTerminal = await TerminalModel.create(data);
-  //   return newTerminal;
-  // }
-
 
   async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
     const { name, battery, wifiLevel, isConnected, group, owner } = data;
 
-    const foundGroup = await GroupModel.findOne({ name: 'group3' });
-    console.log('FOUND GROUP:', foundGroup)
-    console.log('Search for group:', group);
+    const foundGroup = await GroupModel.findOne({ name: group });
 
     if (foundGroup) {
       const newTerminal = await TerminalModel.create({
@@ -62,71 +56,42 @@ export class TerminalRepo implements Repo<Terminal> {
     throw new HttpError(400, 'Bad Request', `Group "${group}" not found`);
   }
 
-
-
-
-  // Async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
-  //   const { name, battery, wifiLevel, isConnected, group, owner } = data;
-  //        console.log('Data received in create:', data);
-  //    console.log('Data received in create:', data.battery);
-  //    console.log('Data received in create:', data.name);
-
-  //    console.log('Data received in create:', data.group);
-
-  //   const foundGroup = await GroupModel.findOne({ name: group });
-
-  //   if (foundGroup) {
-  //     const newTerminal = await TerminalModel.create({ name, battery, wifiLevel, isConnected, owner, terminalGroup: foundGroup.id });
-
-  //     // Popula el usuario antes de agregarlo a la colección
-  //     const terminalWithDetails = await TerminalModel.findById(newTerminal.id).exec();
-
-  //     if (terminalWithDetails) {
-  //       foundGroup.terminals.push(terminalWithDetails);
-
-  //       await foundGroup.save();
-
-  //       return terminalWithDetails;
-  //     }
-  //   }
-
-  //   throw new HttpError(400, 'Bad Request', `Group "${group}" not found`);
-  // }
-
-
-  //   async create(data: Omit<Terminal, 'id'>): Promise<Terminal> {
-  //   const { name, battery, wifiLevel, isConnected, group, owner } = data;
-  //     console.log('Data received in create:', data);
-  //     console.log('Data received in create:', data.battery);
-  //     console.log('Data received in create:', data.name);
-
-  //     console.log('Data received in create:', data.group);
-
-
-  //   const foundGroup = await GroupModel.findOne({ name: group });
-  //   console.log('Found group', foundGroup, 'group', group)
-
-  //   if (foundGroup) {
-  //     const newTerminal = await TerminalModel.create({ name, battery, wifiLevel, isConnected, group: foundGroup._id, owner });
-
-  //     foundGroup.terminals.push(newTerminal);
-  //     await foundGroup.save();
-
-  //     return newTerminal;
-  //   }
-
-  //   throw new HttpError(400, 'Bad Request', `Group "${group}" not found`);
-  // }
-
   async update(id: string, data: Partial<Terminal>): Promise<Terminal> {
-    const newTerminal = await TerminalModel.findByIdAndUpdate(id, data, {
-      new: true,
-    }).exec();
+    const { group } = data;
 
-    if (newTerminal === null)
-      throw new HttpError(404, 'Not found', 'Invalid id');
-    return newTerminal;
+    try {
+      const updatedTerminal = await TerminalModel.findById(id).exec();
+
+      if (!updatedTerminal) {
+        throw new HttpError(404, 'Not found', 'Invalid ID or Terminal not found');
+      }
+
+      if (group !== updatedTerminal.group.toString()) {
+        const prevGroup = await GroupModel.findById(updatedTerminal.group).exec();
+        const foundGroup = await GroupModel.findOne({ name: group }).exec();
+
+        if (prevGroup && foundGroup) {
+          prevGroup.terminals = prevGroup.terminals.filter(terminalId => terminalId.toString() !== id);
+          await prevGroup.save();
+
+          updatedTerminal.group = foundGroup._id;
+          const updatedTerminalResult = await updatedTerminal.save();
+
+          if (updatedTerminalResult) {
+            foundGroup.terminals.push(updatedTerminal._id);
+            await foundGroup.save();
+            return updatedTerminalResult;
+          }
+        }
+      }
+
+      return updatedTerminal;
+    } catch (error) {
+      console.error('Error updating terminal:', error);
+      throw new HttpError(500, 'Internal Server Error', 'Error updating terminal');
+    }
   }
+
 
   async search({
     key,
@@ -143,7 +108,6 @@ export class TerminalRepo implements Repo<Terminal> {
     const deletedTerminal = await TerminalModel.findByIdAndDelete(id).exec();
     if (deletedTerminal === null) throw new HttpError(404, 'Not found', 'Invalid id');
 
-    // Elimina el terminal del grupo
     if (deletedTerminal.group) {
       const group = await GroupModel.findById(deletedTerminal.group).exec();
       if (group) {

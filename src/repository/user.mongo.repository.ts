@@ -36,17 +36,12 @@ export class UserRepo implements Repo<User> {
 
   async create(data: Omit<User, 'id'>): Promise<User> {
     const { userName, password, chat } = data;
-    console.log('Data received in create:', data);
-    console.log('Data received in create:', data.userName);
-    console.log('Data received in create:', data.password);
 
-    console.log('Data received in create:', data.chat);
     const foundChat = await ChatModel.findOne({ name: chat });
 
     if (foundChat) {
       const newUser = await UserModel.create({ userName, password, userChat: foundChat._id });
 
-      // Popula el usuario antes de agregarlo a la colección
       const userWithDetails = await UserModel.findById(newUser._id).exec();
 
       if (userWithDetails) {

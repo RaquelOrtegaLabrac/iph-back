@@ -16,7 +16,6 @@ export class GroupController extends Controller<Group> {
 
   async post(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('BODY', req.body);
       const { id: userId } = req.body.tokenPayload as PayloadToken;
       const user = await this.userRepo.queryById(userId);
       delete req.body.tokenPayload;
@@ -24,7 +23,6 @@ export class GroupController extends Controller<Group> {
       const newGroup = await this.repo.create(req.body);
       this.userRepo.update(user.id, user);
       res.status(201);
-      console.log('this');
       res.send(newGroup);
     } catch (error) {
       next(error);

@@ -22,6 +22,6 @@ terminalRouter.get('/', controller.getAll.bind(controller));
 terminalRouter.get('/:id', controller.getById.bind(controller));
 terminalRouter.post('/', auth.logged.bind(auth), controller.post.bind(controller)
 );
-terminalRouter.patch('/:id', auth.logged.bind(auth), auth.authorized.bind(auth), controller.patch.bind(controller));
+terminalRouter.post('/:id', auth.logged.bind(auth), auth.authorized.bind(auth), controller.postupdate.bind(controller));
 terminalRouter.delete('/:id', auth.logged.bind(auth), auth.authorized.bind(auth), controller.deleteById.bind(controller)
 );

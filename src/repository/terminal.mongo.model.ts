@@ -38,7 +38,6 @@ terminalSchema.set('toJSON', {
   transform(_document, returnedObject) {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
-    // Delete returnedObject.owner;
   },
 });
 

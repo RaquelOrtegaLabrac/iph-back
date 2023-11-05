@@ -38,7 +38,6 @@ export class UserController extends Controller<User> {
 
       if (!data.length)
         throw new HttpError(400, 'Bad Request', 'Invalid user/Password');
-      console.log(data.length);
       const isUserValid = await AuthServices.compare(
         req.body.password,
         data[0].password

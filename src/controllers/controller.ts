@@ -13,7 +13,6 @@ export abstract class Controller<T extends { id: string | number }> {
         page: 1,
         count: items.length,
       };
-      console.log(req.body);
       res.send(response);
     } catch (error) {
       next(error);
@@ -40,10 +39,8 @@ export abstract class Controller<T extends { id: string | number }> {
 
   async patch(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('1');
       res.status(202);
       res.send(await this.repo.update(req.params.id, req.body));
-      console.log('2');
     } catch (error) {
       next(error);
     }
