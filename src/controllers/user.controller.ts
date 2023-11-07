@@ -58,6 +58,7 @@ export class UserController extends Controller<User> {
       };
 
       res.send(response);
+      console.log('response', response)
     } catch (error) {
       next(error);
     }
