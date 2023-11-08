@@ -1,4 +1,41 @@
-## PRUEBA TÉCNICA PARA IPH (back)
+## IPH - Prueba técnica (front)
+
+Aplicación diseñada para Desktop.
+
+En primer lugar aparece una pantalla de login. 
+USUARIO: asdf
+CONTRASEÑA: asdf
+También es posible registrarse. Al registrarse, se solicita elegir un chat. Y se agrega ese usuario como participante al chat deseado. 
+
+Una vez el login se ha realizado exitosamente, Aparecerá la pantalla del dashboard con los botones de añadir, editar, y borrar. 
+Cada vez que se registra un nuevo usuario se suma a los participantes del chat elegido. 
+
+Cada vez que se añade un nuevo terminal, se elige el grupo al que pertenecerá el terminal. 
+
+**Funcionalidades Principales:**
+
+La aplicación permite gestionar terminales, asociarlos a grupos y asignar propietarios. El dashboard, diseñado con Bootstrap, proporciona una visión general de las estadísticas y facilita la navegación. Las demás pantallas, desarrolladas con SCSS, ofrecen una experiencia de usuario agradable.
+
+
+**Tecnologías Utilizadas:**
+
+- **Lenguaje utilizado:**
+  - TypeScript
+
+- **Frontend:**
+  - React: Biblioteca principal para el desarrollo de la interfaz de usuario.
+  - Bootstrap: Utilizado en el dashboard para un diseño responsivo y atractivo.
+  - SCSS: Empleado en las demás pantallas para un estilo personalizado y modular.
+
+- **Backend:**
+  - Node.js: Plataforma de ejecución para el servidor.
+  - Express.js: Marco de aplicación web para Node.js.
+  - MongoDB: Base de datos NoSQL utilizada para almacenar la información.
+
+- **Gestión de Estado y Asincronía:**
+  - Redux: Utilizado para gestionar el estado de la aplicación de manera centralizada.
+  - Thunks: Aplicados para manejar lógica asíncrona de forma eficiente.
+
 
 ENUNCIADO:
 
