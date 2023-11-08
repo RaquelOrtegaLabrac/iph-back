@@ -63,9 +63,8 @@ export class TerminalController extends Controller<Terminal> {
 async deleteById(req: Request, res: Response, next: NextFunction) {
     try {
 
-      const { id: userId } = req.body.tokenPayload as PayloadToken;
       const terminal = await this.repo.queryById(req.params.id);
-      if (terminal && userId === terminal.owner.id) {
+      if (terminal) {
         await this.repo.delete(req.params.id);
         res.status(201);
         res.send(terminal);
