@@ -11,7 +11,6 @@ import { groupRouter } from './routers/group.router.js';
 const debug = createDebug('api-iph:App');
 
 export const app = express();
-console.log('app')
 
 debug('Loaded Express App');
 

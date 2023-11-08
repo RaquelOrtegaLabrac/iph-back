@@ -51,14 +51,12 @@ export class UserController extends Controller<User> {
         userName: data[0].userName,
       };
       const token = AuthServices.createJWT(payload);
-      console.log("Generated Token:", token);
       const response: LoginResponse = {
         token,
         user: data[0],
       };
 
       res.send(response);
-      console.log('response', response)
     } catch (error) {
       next(error);
     }
