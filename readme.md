@@ -1,4 +1,4 @@
-## IPH - Prueba técnica (front)
+## IPH - Prueba técnica (back)
 
 Aplicación diseñada para Desktop.
 
