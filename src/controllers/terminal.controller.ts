@@ -37,11 +37,8 @@ export class TerminalController extends Controller<Terminal> {
 
   async postupdate(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log('try');
       const { name, battery, wifiLevel, isConnected, group, owner } = req.body;
       
-      console.log('REQ.BODY', req.body)
-
       const updatedData = {
         name,
         battery,
@@ -53,7 +50,6 @@ export class TerminalController extends Controller<Terminal> {
 
       const updatedTerminal = await this.repo.update(req.params.id, updatedData);
       res.status(200).json(updatedTerminal);
-      console.log('updated Terminal', updatedTerminal)
     } catch (error) {
       next(error);
     }

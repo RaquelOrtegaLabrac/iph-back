@@ -4,7 +4,7 @@ import createDebug from 'debug';
 import { dbConnect } from './db/db.connect.js';
 const debug = createDebug('api-iph');
 
-const PORT = process.env.PORT || 5555;
+const PORT = process.env.PORT || 7070;
 
 const server = http.createServer(app);
 

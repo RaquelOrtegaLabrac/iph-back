@@ -55,7 +55,6 @@ export class UserController extends Controller<User> {
         token,
         user: data[0],
       };
-      console.log('response', response)
       res.send(response);
     } catch (error) {
       next(error);
