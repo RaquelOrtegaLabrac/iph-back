@@ -1,10 +1,9 @@
 ## IPH - Prueba técnica (back)
 
-Aplicación diseñada para Desktop.
-
 En primer lugar aparece una pantalla de login. 
 USUARIO: asdf
 CONTRASEÑA: asdf
+
 También es posible registrarse. Al registrarse, se solicita elegir un chat. Y se agrega ese usuario como participante al chat deseado. 
 
 Una vez el login se ha realizado exitosamente, Aparecerá la pantalla del dashboard con los botones de añadir, editar, y borrar. 
@@ -14,7 +13,7 @@ Cada vez que se añade un nuevo terminal, se elige el grupo al que pertenecerá 
 
 **Funcionalidades Principales:**
 
-La aplicación permite gestionar terminales, asociarlos a grupos y asignar propietarios. El dashboard, diseñado con Bootstrap, proporciona una visión general de las estadísticas y facilita la navegación. Las demás pantallas, desarrolladas con SCSS, ofrecen una experiencia de usuario agradable.
+La aplicación es responsive y permite gestionar terminales y asociarlos a grupos. El dashboard, diseñado con Bootstrap, proporciona una visión general de las estadísticas y facilita la navegación. Las demás pantallas, desarrolladas con SCSS, ofrecen una experiencia de usuario agradable.
 
 
 **Tecnologías Utilizadas:**
@@ -30,7 +29,7 @@ La aplicación permite gestionar terminales, asociarlos a grupos y asignar propi
 - **Backend:**
   - Node.js: Plataforma de ejecución para el servidor.
   - Express.js: Marco de aplicación web para Node.js.
-  - MongoDB: Base de datos NoSQL utilizada para almacenar la información.
+  - MongoDB: Base de datos utilizada para almacenar la información.
 
 - **Gestión de Estado y Asincronía:**
   - Redux: Utilizado para gestionar el estado de la aplicación de manera centralizada.
